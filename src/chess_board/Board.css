@@ -1,0 +1,11 @@
+.board {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border: 3px solid black;
+}
+
+.board-row {
+    height: 12.5%;
+    width: 100%;
+}
