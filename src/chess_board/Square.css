@@ -12,3 +12,7 @@
 .light-square {
     background-color: rgb(227, 193, 111);
 }
+
+.available-square {
+    background-color: rgb(144, 238, 144);
+}

@@ -1,11 +1,24 @@
-class Piece {
+import React from 'react';
 
-    constructor(player, pieceType) {
-        this.player = player;
-        this.style = {
-            backgroundImage: 'url(' + require("../assets/images/" + pieceType + "_" + ((player === 1) ? "white" : "black") + ".png") + ')',
-            backgroundSize: 'cover'
+class Piece extends React.Component {
+    constructor(props) {
+        super();
+        this.state = {
+            player: props.player,
+            onDragStart: props.onDragStart,
+            url: require("../assets/images/" + props.pieceType + "_" + ((props.player === 1) ? "white" : "black") + ".png")
         };
+    }
+    
+    render() {
+        return (
+            <img
+            draggable
+            src={this.state.url}
+            onDragStart={(e) => this.state.onDragStart(e)}
+            alt='Chess piece'
+            />
+        );
     }
 }
 

@@ -3,12 +3,18 @@ import Square from './Square';
 import './Board.css';
 
 class Board extends React.Component {
-
     constructor(props) {
-        super(props);
+        super();
         this.state = {
-            squares: props.squares
-        }
+            squares: props.squares,
+            onDragStart: props.onDragStart,
+            onDragOver: props.onDragOver,
+            onDragLeave: props.onDragLeave
+        } 
+    }
+
+    static getDerivedStateFromProps(nextProps) {
+        return nextProps;
     }
 
     render() {
@@ -18,11 +24,32 @@ class Board extends React.Component {
             let row = [];
 
             for(let j = 0; j < 8; j++) {
-                let color = (isEven(i) && isEven(j)) || (!isEven(i) && !isEven(j)) ? "light-square" : "dark-square";
-                row.push(<Square 
-                    color={color}
-                    style={this.state.squares[i*8+j].piece ? this.state.squares[i*8+j].piece.style : null}
-                />);
+                let squareNum = i*8+j;
+
+                if(this.state.squares[squareNum].piece) {
+                    row.push(
+                    <Square 
+                    squareNum={this.state.squares[squareNum].squareNum}
+                    className={this.state.squares[squareNum].className}
+                    onDragStart={this.state.onDragStart}
+                    onDragOver={this.state.onDragOver}
+                    onDragLeave={this.state.onDragLeave}
+                    player={this.state.squares[squareNum].piece.player} 
+                    pieceType={this.state.squares[squareNum].piece.pieceType} 
+                    />
+                    );
+                }
+                else {
+                    row.push(
+                    <Square 
+                    squareNum={this.state.squares[squareNum].squareNum}
+                    className={this.state.squares[squareNum].className}
+                    onDragStart={this.state.onDragStart}
+                    onDragOver={this.state.onDragOver}
+                    onDragLeave={this.state.onDragLeave}
+                    />
+                    );
+                }
             }
             board.push(<div className='board-row'>{row}</div>);
         }
@@ -31,11 +58,6 @@ class Board extends React.Component {
             <div className='board'>{board}</div>
         );
     }
-}
-
-// 0 is not even but we just assume it is here
-function isEven(num) {
-    return num % 2 === 0
 }
 
 export default Board;
